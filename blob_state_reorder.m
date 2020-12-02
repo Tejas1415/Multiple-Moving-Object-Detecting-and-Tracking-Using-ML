@@ -1,4 +1,14 @@
-
+%  * ----------------------------------------------------------------------
+%  * Function Name        : blob_state_reorder()
+%  * Description          : To reorder blobs based on minimum distance
+%  *                        criteria
+%  *   ---------------+-----+-----+-----+----------------------------------
+%  *   Name           | I/P | O/P | I/O | Purpose
+%  *   ---------------+-----+-----+-----+----------------------------------
+%  *   blob_state     |     |     |  X  | Blob State Structure pointer
+%  *   blob_data      |     |     |  X  | Blob data Structure pointer
+%  *   nw_order       |     |  X  |     | New order of the blobs
+%  *-----------------------------------------------------------------------
 function [nw_order,blob_state,blob_data] = blob_state_reorder...
     (blob_state,blob_data, score)
 %Loading state variables to local variables
@@ -28,12 +38,12 @@ while(k <= pst_cnt)
     d_prm = 100*ones(1,cur_cnt);
     for i = 1:cur_cnt 
         if(D_cur(i,1) == 0)
-            %d_prm(i) = sum(abs(C_cur(i,:)-C_pst(k,:)));
-			d_prm(i) = score(i,k);
+            d_prm(i) = score(i,k);
         end
     end  
     [min_d, min_i] = min(d_prm);
     dist_parm(k) = min_d;
+
     if(min_d < Th1)
         C_new(d_cnt,:) = C_cur(min_i,:);
         A_new(d_cnt) = A_cur(min_i);
@@ -48,7 +58,7 @@ while(k <= pst_cnt)
     k = k+1;
 end
 
- m = 1;
+m = 1;
 if(pst_cnt > cur_cnt)
     for i = 1:pst_cnt
         if(D_pst(i,1) == 0)
